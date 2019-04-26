@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="programmer">
-<meta property="og:type" content="website">
-<meta property="og:title" content="记录先生">
-<meta property="og:url" content="https://hwangdeyu.github.io/index.html">
+<meta name="description" content="字符串的自动规划考察匹配的偏多，关键找出匹配的动态转移公式。 5. Longest Palindromic Substring（Medium) dp[i][j] 代表s[j:i+1] 是否为回文子串分三种情况为回文子串如果 s[i] == s[j]，则下面三种情况dp[i][j]=True(1) i==j 单个字符为回文(2) i == j+1 相邻两字符相同为回文(3) dp[i-1][j+1]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DP">
+<meta property="og:url" content="https://hwangdeyu.github.io/2019/04/26/DP/index.html">
 <meta property="og:site_name" content="记录先生">
-<meta property="og:description" content="programmer">
+<meta property="og:description" content="字符串的自动规划考察匹配的偏多，关键找出匹配的动态转移公式。 5. Longest Palindromic Substring（Medium) dp[i][j] 代表s[j:i+1] 是否为回文子串分三种情况为回文子串如果 s[i] == s[j]，则下面三种情况dp[i][j]=True(1) i==j 单个字符为回文(2) i == j+1 相邻两字符相同为回文(3) dp[i-1][j+1]">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-26T09:50:43.558Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记录先生">
-<meta name="twitter:description" content="programmer">
+<meta name="twitter:title" content="DP">
+<meta name="twitter:description" content="字符串的自动规划考察匹配的偏多，关键找出匹配的动态转移公式。 5. Longest Palindromic Substring（Medium) dp[i][j] 代表s[j:i+1] 是否为回文子串分三种情况为回文子串如果 s[i] == s[j]，则下面三种情况dp[i][j]=True(1) i==j 单个字符为回文(2) i == j+1 相邻两字符相同为回文(3) dp[i-1][j+1]">
 
 
 
@@ -118,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://hwangdeyu.github.io/">
+  <link rel="canonical" href="https://hwangdeyu.github.io/2019/04/26/DP/">
 
 
 
 
 
-  <title>记录先生</title>
+  <title>DP | 记录先生</title>
   
 
 
@@ -143,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -247,9 +247,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -279,9 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/26/DP/" itemprop="url">DP</a></h1>
+          <h1 class="post-title" itemprop="name headline">DP</h1>
         
 
         <div class="post-meta">
@@ -360,9 +358,7 @@
       
 
       
-        
-          
-            <p>字符串的自动规划考察匹配的偏多，关键找出匹配的动态转移公式。</p>
+        <p>字符串的自动规划考察匹配的偏多，关键找出匹配的动态转移公式。</p>
 <h2 id="5-Longest-Palindromic-Substring（Medium"><a href="#5-Longest-Palindromic-Substring（Medium" class="headerlink" title="5. Longest Palindromic Substring（Medium) "></a><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener">5. Longest Palindromic Substring（Medium) </a></h2><p>dp[i][j] 代表s[j:i+1] 是否为回文子串<br>分三种情况为回文子串<br>如果 s[i] == s[j]，则下面三种情况dp[i][j]=True<br>(1) i==j 单个字符为回文<br>(2) i == j+1 相邻两字符相同为回文<br>(3) dp[i-1][j+1] 即j+1到 i-1 为回文子串则dp[i][j]为回文子串    </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def longestPalindrome(self, s):</span><br><span class="line">    n = len(s)</span><br><span class="line">    dp = [[False] * n for _ in range(n)]</span><br><span class="line">    left = right = 0</span><br><span class="line">    for i in range(n):</span><br><span class="line">        for j in range(i+1):</span><br><span class="line">            if s[i] == s[j] and (i-j &lt;= 1 or dp[i-1][j+1]): #三种情况包含</span><br><span class="line">                dp[i][j] = True</span><br><span class="line">            if dp[i][j] and i-j &gt; right - left: #记录最大长度</span><br><span class="line">                right = i</span><br><span class="line">                left = j</span><br><span class="line">    return s[left:right+1]</span><br></pre></td></tr></table></figure>
 <hr>
@@ -376,8 +372,6 @@
 <h2 id="97-Interleaving-String（Hard"><a href="#97-Interleaving-String（Hard" class="headerlink" title="97. Interleaving String（Hard) "></a><a href="https://leetcode.com/problems/interleaving-string/" target="_blank" rel="noopener">97. Interleaving String（Hard) </a></h2><p>dp[i][j] 代表s1[…i] s2[….j]匹配到s3[….i+j-1]<br>接着就简单了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">def isInterleave(self, s1, s2, s3):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    :type s1: str</span><br><span class="line">    :type s2: str</span><br><span class="line">    :type s3: str</span><br><span class="line">    :rtype: bool</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    len1, len2, len3 = len(s1), len(s2), len(s3) </span><br><span class="line">    if len3 != len1 + len2:</span><br><span class="line">        return False</span><br><span class="line">    dp = [[False] * (len2+1)  for _ in range(len1+1)]</span><br><span class="line">    for i in range(len1+1):</span><br><span class="line">        for j in range(len2+1):</span><br><span class="line">            if i == 0 and j == 0:</span><br><span class="line">                dp[i][j] = True</span><br><span class="line">            elif i == 0:</span><br><span class="line">                dp[i][j] = dp[i][j-1] and s2[j-1] == s3[j-1]</span><br><span class="line">            elif j == 0:</span><br><span class="line">                dp[i][j] = dp[i-1][j] and s1[i-1] == s3[i-1]</span><br><span class="line">            else:</span><br><span class="line">                dp[i][j] = (dp[i][j-1] and s2[j-1] == s3[j+i-1]) or (dp[i-1][j] and s1[i-1] == s3[i+j-1])</span><br><span class="line">    return dp[-1][-1]</span><br></pre></td></tr></table></figure></p>
 <p>##<a href="https://leetcode.com/problems/distinct-subsequences/" target="_blank" rel="noopener">115. Distinct Subsequences（Hard) </a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def numDistinct(self, s: str, t: str) -&gt; int:</span><br><span class="line">    #dp[i][j] 为s[...i-1] 与t[....j-1]匹配不同的次数</span><br><span class="line">    dp = [[0] * (len(t)+1) for _ in range(len(s)+1)]</span><br><span class="line">    for i in range(len(s)+1):</span><br><span class="line">        dp[i][0] = 1 </span><br><span class="line">    for i in range(1, len(s)+1):</span><br><span class="line">        for j in range(1, len(t)+1):</span><br><span class="line">            if s[i-1] != t[j-1]: #不相等只能是匹配到s[i-2]</span><br><span class="line">                dp[i][j] = dp[i-1][j]</span><br><span class="line">            else: #删除或不删除都可以</span><br><span class="line">                dp[i][j] = dp[i-1][j] + dp[i-1][j-1]</span><br><span class="line">    return dp[-1][-1]</span><br></pre></td></tr></table></figure></p>
 
-          
-        
       
     </div>
     
@@ -394,175 +388,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hwangdeyu.github.io/2019/04/25/hexo-写作/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.Dejack">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="记录先生">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/25/hexo-写作/" itemprop="url">hexo 写作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-25T00:00:00+08:00">
-                2019-04-25
-              </time>
+              <a href="/2019/04/25/hexo-写作/" rel="next" title="hexo 写作">
+                <i class="fa fa-chevron-left"></i> hexo 写作
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/25/hexo-写作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/25/hexo-写作/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  67
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="hexo官网"><a href="#hexo官网" class="headerlink" title="hexo官网"></a><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官网</a></h1><h1 id="hexo主题"><a href="#hexo主题" class="headerlink" title="hexo主题"></a><a href="https://hexo.io/plugins/" target="_blank" rel="noopener">hexo主题</a></h1><h1 id="hexo指南"><a href="#hexo指南" class="headerlink" title="hexo指南"></a><a href="https://hexo-guide.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">hexo指南</a></h1><h1 id="awesome-hexo"><a href="#awesome-hexo" class="headerlink" title="awesome-hexo"></a><a href="https://github.com/hexojs/awesome-hexo" target="_blank" rel="noopener">awesome-hexo</a></h1><h1 id="标题一"><a href="#标题一" class="headerlink" title="标题一"></a>标题一</h1><h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><h3 id="标题三"><a href="#标题三" class="headerlink" title="标题三"></a>标题三</h3><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><ul>
-<li>列表第一项</li>
-<li>列表第二项</li>
-</ul>
-<ol>
-<li>有序列表第一项</li>
-<li>有序列表第二项</li>
-</ol>
-<p><a href="链接地址">标题</a><br><img src="/2019/04/25/hexo-写作/图片链接地址" alt="图片描述"></p>
-<p><em>斜体</em></p>
-<p><strong>粗体</strong></p>
-<blockquote>
-<p>引用段落</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">代码块</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -572,167 +419,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hwangdeyu.github.io/2018/10/23/hello-world/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.Dejack">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="记录先生">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/23/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T10:19:02+08:00">
-                2018-10-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/23/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/23/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  73
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -740,6 +431,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -760,8 +465,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -813,6 +527,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Longest-Palindromic-Substring（Medium"><span class="nav-number">1.</span> <span class="nav-text">5. Longest Palindromic Substring（Medium) </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-Regular-Expression-Matching（Hard"><span class="nav-number">2.</span> <span class="nav-text">10. Regular Expression Matching（Hard) </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#72-Edit-Distance（Hard"><span class="nav-number">3.</span> <span class="nav-text">72. Edit Distance（Hard) </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#97-Interleaving-String（Hard"><span class="nav-number">4.</span> <span class="nav-text">97. Interleaving String（Hard) </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -962,6 +692,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -979,6 +713,18 @@
       <script id="dsq-count-scr" src="https://评论.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://hwangdeyu.github.io/2019/04/26/DP/';
+          this.page.identifier = '2019/04/26/DP/';
+          this.page.title = 'DP';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://评论.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
